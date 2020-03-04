@@ -1,0 +1,69 @@
+<html>
+    <head>
+        <style>
+            button {
+                margin-right: 20px
+            }
+        </style>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script type=text/javascript>
+            $(function() {
+                _input = prompt("Enter Password")
+                while (_input != 'BildschirmaufdemMars') {
+                    _input = prompt("Enter Password")
+                }
+                for (i=0;i<$('a').length;i++) {
+                    $('a')[i].hidden = false;
+                } 
+            });
+            
+            $(function() {
+                $('#skip').click(function() {
+                    document.getElementById('ctx_button').value = 'skip';
+                    _ajax_call();
+                });
+
+                $('#playpause').click(function() {
+                    document.getElementById('ctx_button').value = 'playpause';
+                    _ajax_call();
+                });
+            });
+
+            function _ajax_call() {
+                $.ajax({
+                    url: '/adminOptions',
+                    data: $('#mainForm').serialize(),
+                    type: 'POST',
+                    success: function(data) {
+                        // Wenn True zurückkommt, wird weiter verarbeitet, andernfalls Fehlermeldung
+                        
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <div>
+            <form action="/submit" method="POST" id="mainForm">
+                <div class="table">
+                    <table>
+                        <tr>
+                            <td>
+                                <a href=# hidden><button id="skip" class="button" type="button">Skip</button></a>
+                                <a href=# hidden><button id="playpause" class="button" type="button">Play/Pause</button></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="hidden" id="ctx_button" name="ctx_button">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
