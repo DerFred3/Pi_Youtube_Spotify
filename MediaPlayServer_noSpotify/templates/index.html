@@ -1,0 +1,90 @@
+<html>
+    <head>
+        <style>
+            .text-label {
+                font-size: 17px
+            }
+
+            td {
+                padding-top: 15px
+            }
+            
+            .button {
+                margin-right: 20px
+            }
+        </style>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script type=text/javascript>
+            $(function() {
+                $('#submit_normal').click(function() {
+                    document.getElementById('ctx_button').value = 'submit_normal';
+                    _ajax_call();
+                });
+
+                $('#submit_firstQ').click(function() {
+                    document.getElementById('ctx_button').value = 'submit_firstQ';
+                    _ajax_call();
+                });
+            });
+
+            function _ajax_call() {
+                $.ajax({
+                    url: '/checkInput',
+                    data: $('#mainForm').serialize(),
+                    type: 'POST',
+                    success: function(data) {
+                        // Wenn True zurückkommt, wird weiter verarbeitet, andernfalls Fehlermeldung
+                        if (data.success) {
+                            document.getElementById('ctx_media').value = data.ctx_media;
+                            $('#mainForm').submit();
+                        }
+                        else {
+                            alert(data.error);
+                        }
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <div>
+            <form action="/submit" method="POST" id="mainForm">
+                <div class="table">
+                    <table>
+                        <!--<tr>
+                            <td>
+                                <div class="text-label">
+                                    Spotify-Uri:
+                                </div>
+                                <input type="text" name="spotify_uri">
+                            </td>
+                        </tr>-->
+                        <tr>
+                            <td>
+                                <div class="text-label">
+                                    Youtube-Url:
+                                </div>
+                                <input type="text" name="youtube_url">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href=#><button id="submit_normal" class="button" type="button">Submit</button></a>
+                                <a href=#><button id="submit_firstQ" class="button" type="button">1st in queue</button></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="hidden" id="ctx_media" name="ctx_media">
+                                <input type="hidden" id="ctx_button" name="ctx_button">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
