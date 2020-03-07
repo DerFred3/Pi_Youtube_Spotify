@@ -25,6 +25,8 @@ class ServerManager:
         ctx_media = str(request.form.get('ctx_media'))
         ctx_button = str(request.form.get('ctx_button'))
 
+        print(ctx_media + '-Link wurde per ' + ctx_button + ' submitted')
+
         if not spotify_uri == '':
             url = str(spotify_uri)
             ctx = flags.ctx_spotify
@@ -33,10 +35,12 @@ class ServerManager:
             ctx = flags.ctx_youtube
         
         if ctx_button == 'submit_normal':
+            print('Url wird der Queue hinzugefügt')
             queueManager.QueueManager(queueManager.QueueManager.dbPath).add(url, ctx)
         elif ctx_button == 'submit_firstQ':
+            print('Url wird an der ersten Stelle der Queue hinzugefügt')
             queueManager.QueueManager(queueManager.QueueManager.dbPath).addFirst(url, ctx)
-            flags.doSkip = True
+            flags.setSkip(True)
         
         return redirect("/")
     

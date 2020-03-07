@@ -20,7 +20,7 @@ import flags
 def checkSpotifyYoutube(link):
     # Zeit für Regex
     regex_spotify = '^(spotify:track:[\w]+([\n]*))$' # Spotify-URI
-    regex_youtube = '^https:\/\/((www.youtube.com\/watch\?v=[\w]+)|(youtu.be\/[\w]+))$' # Youtube-Link oder Youtu.be-Link
+    regex_youtube = '^https:\/\/((www.youtube.com\/watch\?v=[\w+-]+)|(youtu.be\/[\w+-]+))$' # Youtube-Link oder Youtu.be-Link
     
     match = re.search(regex_spotify, link)
     if match:
